@@ -1,0 +1,20 @@
+(cd kernel; ./mk)
+(cd USER; ./mku init)
+(cd USER; ./mku login)
+(cd USER; ./mku ls)
+(cd USER; ./mku sh)
+(cd USER; ./mku cat)
+(cd USER; ./mku cp)
+(cd USER; ./mku l2u)
+(cd USER; ./mku more)
+(cd USER; ./mku grep)
+
+echo ready to go?
+read dummy
+
+qemu-system-arm -M versatilepb -m 256M -sd sdimage -kernel t.bin -serial mon:stdio #-serial /dev/pts/18
+
+
+
+
+
