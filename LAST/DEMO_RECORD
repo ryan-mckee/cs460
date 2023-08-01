@@ -1,0 +1,65 @@
+sh wasn't able to get to a working state. The other programs were made to interact with the default sh and work, but my sh doesn't have pipes/io redirection.
+All it can do is run simple commands and exit/logout
+The functionality of the other programs with piping and io redirection can be tested if sh is omitted from mk and compiled with a fresh sdimage
+
+
+      CS 460 LAST DEMO RECORD   NAME:Ryan McKee   ID:11687711
+
+============================================================================
+
+ Commands             Expected Results                 Observed & Comments
+-------------    --------------------------------    -----------------------
+1. Boot up     :  P1 (init) create login processes  the console displays that 3 login processes were created. The terminals have login prompts
+
+2. login:      :  login from tty0                  the login console rejects attempts made with invalid information. When presented with valid information, it enters into the sh program
+
+3.             :  login from ttyS0, ttyS1          the login console on the terminal rejects attempts made with invalid information.
+                                                   When presented with valid information, it enters into the sh program. Multiple login sessions
+                                                   are able to be open simulaneously, even on the same account
+
+               :  logout; login again              logging out returns to the login screen on the console. When presented with valid login information it enters the sh program again
+
+sh: Control-C  :  sh must not die                  ___________________________Unable to get sh to a working state, sh dies
+
+4. ls          :  SAME as ls -l in Linux,          ls displays the files, their permissions, and size. Works in the current/relative directory, or otherwise
+                  except no time field  
+5. cat         : show input lines from stdin:      every time enter is pressed, the line from the console is printed
+
+6. cat f       : show contents of file f           the contents of f are printed if it exists. The program was also coded to print multiple files like cat actually can
+
+7. cat f1 > f2 
+   ls          : f1, f2 MUST be SAME size          ___________________________Unable to get sh io redirection working
+
+8  grep abcd    :  grep for abcd from stdin
+
+9. grep printf f: show lines with "printf" ONLY    parses through the file line by line, searching for the pattern. If the line is found, prints it out. can perform this on multiple files
+                                                   like grep actually can
+
+10. more f      : MUST pause after display ONE screen
+                : Enter key: advance by line 
+                 : SPACE key: advance by screen     if a file is less than 25 lines it prints the whole file. If it is longer it waits for user input.
+                                                    Pressing enter prints another line. pressing space prints another 25 lines. The program ends when the file ends
+
+11. cat f | more : must PAUSE for Enter/Space keys  ___________________________Unable to get sh pipes working. This was tested with the default sh
+                                                    pressing enter twice advances the progress in the file by one line. Pressing space advances the progress by a screen
+
+
+12. cat f | grep printf : show lines with printf   ___________________________Unable to get sh pipes working. This was tested with the default sh
+                                                   prints the lines in the file f that have 'line' in them
+
+
+13. cat f | l2u | grep PRINT: outputs all uppercase   ___________________________Unable to get sh pipes working. This was tested with the default sh
+                                                      prints the lines in the file f, modified to be capitalized, that have 'LINE' in them
+
+
+14. cat f | cat | l2u | grep LINE: 3 PIPEs      ___________________________Unable to get sh pipes working. This was tested with the default sh
+                                                prints the lines in the file f, modified to be capitalized, that have 'LINE' in them
+
+
+15. cat < f | cat | grep print > out :        __________________________________Unable to get sh pipes working
+    cat out (must see out contents)           __________________________________Unable to get sh pipes working
+
+16. cp f g; ls :   show f and g SAME size     the files are the same size. Their contents are also identical when checked with cat
+
+=================================================================================
+
